@@ -222,7 +222,15 @@ function calcIdade(data)
     return quantos_anos < 0 ? 0 : quantos_anos;
 }
 
-onload = () => {
+
+function updateAge() {
     var campo = document.getElementById("idade");
     campo.innerHTML = calcIdade('24/03/2002');
+}
+
+
+onload = () => {
+
+    updateAge();
+    loadProjects();
 }
