@@ -232,5 +232,4 @@ function updateAge() {
 onload = () => {
 
     updateAge();
-    loadProjects();
 }
