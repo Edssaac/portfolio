@@ -222,6 +222,5 @@ function updateAge() {
 
 
 onload = () => {
-
     updateAge();
 }
