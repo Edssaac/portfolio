@@ -1,19 +1,19 @@
 // MENU SHOW AND HIDDEN
-const navMenu = document.getElementById('nav-menu'),
-    navToggle = document.getElementById('nav-toggle'),
-    navClose = document.getElementById('nav-close');
+const navMenu = document.getElementById('nav-menu');
+const navToggle = document.getElementById('nav-toggle');
+const navClose = document.getElementById('nav-close');
 
 // MENU SHOW
 if (navToggle) {
     navToggle.addEventListener('click', () => {
-        navMenu.classList.add('show-menu')
+        navMenu.classList.add('show-menu');
     });
 }
 
 // MENU HIDDEN
 if (navMenu) {
     navMenu.addEventListener('click', () => {
-        navMenu.classList.remove('show-menu')
+        navMenu.classList.remove('show-menu');
     });
 }
 
@@ -27,11 +27,12 @@ function linkAction() {
         navMenu.classList.remove('show-menu');
     }
 }
+
 navLink.forEach(n => n.addEventListener('click', linkAction));
 
 // ACCORDION SKILLS
-const skillsContent = document.getElementsByClassName('skills__content'),
-    skillsHeader = document.querySelectorAll('.skills__header');
+const skillsContent = document.getElementsByClassName('skills__content');
+const skillsHeader = document.querySelectorAll('.skills__header');
 
 function toggleSkills() {
     let itemClass = this.parentNode.className;
@@ -43,14 +44,13 @@ function toggleSkills() {
     if (itemClass === 'skills__content skills__close') {
         this.parentNode.className = 'skills__content skills__open';
     }
-
 }
+
 skillsHeader.forEach((el) => { el.addEventListener('click', toggleSkills) });
 
-
 // QUALIFICATION TABS
-const tabs = document.querySelectorAll('[data-target]'),
-    tabContents = document.querySelectorAll('[data-content]');
+const tabs = document.querySelectorAll('[data-target]');
+const tabContents = document.querySelectorAll('[data-content]');
 
 tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -59,70 +59,42 @@ tabs.forEach(tab => {
         tabContents.forEach(tabContent => {
             tabContent.classList.remove('qualification__active');
         });
+
         target.classList.add('qualification__active');
 
         tabs.forEach(tab => {
             tab.classList.remove('qualification__active');
-        })
+        });
+
         tab.classList.add('qualification__active');
     });
 });
 
-
-// SERVICES MODAL
-const modalViews = document.querySelectorAll('.services__modal'),
-    modalButtons = document.querySelectorAll('.services__button'),
-    modalCloses = document.querySelectorAll('.services__modal-close');
-
-let modal = function (modalClick) {
-    modalViews[modalClick].classList.add('active-modal');
-};
-
-modalButtons.forEach((modalButton, i) => {
-    modalButton.addEventListener('click', () => {
-        modal(i);
-    });
-});
-
-modalCloses.forEach((modalClose) => {
-    modalClose.addEventListener('click', () => {
-        modalViews.forEach((modalView) => {
-            modalView.classList.remove('active-modal');
-        });
-    });
-});
-
-
 // PORTFOLIO SWIPER
-let swiper = new Swiper('.portfolio__container',
-    {
-        cssMode: true,
-        loop: true,
-        navigation:
-        {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        pagination:
-        {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        // mousewheel: true,
-        keyboard: true,
-    });
-
+let swiper = new Swiper('.portfolio__container', {
+    loop: true,
+    cssMode: true,
+    keyboard: true,
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+    },
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+    }
+});
 
 // SCROLL SECTIONS ACTIVE LINK
-const sections = document.querySelectorAll('section[id]')
+const sections = document.querySelectorAll('section[id]');
 
 function scrollActive() {
-    const scrollY = window.pageYOffset;
+    const scrollY = window.scrollY;
 
     sections.forEach(current => {
         const sectionHeight = current.offsetHeight;
         const sectionTop = current.offsetTop - 50;
-        sectionId = current.getAttribute('id');
+        const sectionId = current.getAttribute('id');
 
         if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
             document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active-link');
@@ -131,34 +103,36 @@ function scrollActive() {
         }
     });
 }
-window.addEventListener('scroll', scrollActive);
 
+window.addEventListener('scroll', scrollActive);
 
 // CHANGE BACKGROUND HEADER
 function scrollHeader() {
     const nav = document.getElementById('header');
 
     // When the scroll is greater than 200 viewport height, add the scroll-header class to the header tag
-    if (this.scrollY >= 80)
+    if (this.scrollY >= 80) {
         nav.classList.add('scroll-header');
-    else
+    } else {
         nav.classList.remove('scroll-header');
+    }
 }
-window.addEventListener('scroll', scrollHeader);
 
+window.addEventListener('scroll', scrollHeader);
 
 // SCROLL UP
 function scrollUp() {
     const scrollUp = document.getElementById('scroll-up');
 
     // When the scroll is higher than 560 viewport height, add the show-scroll class to the a tag with the scroll-up class
-    if (this.scrollY >= 540)
+    if (this.scrollY >= 540) {
         scrollUp.classList.add('show-scroll');
-    else
+    } else {
         scrollUp.classList.remove('show-scroll');
+    }
 }
-window.addEventListener('scroll', scrollUp);
 
+window.addEventListener('scroll', scrollUp);
 
 // DARK THEME
 const themeButton = document.getElementById('theme-button');
@@ -190,37 +164,31 @@ themeButton.addEventListener('click', () => {
     localStorage.setItem('selected-icon', getCurrentIcon());
 });
 
-function calcIdade(data) {
-    var
-        d = new Date,
-        ano_atual = d.getFullYear(),
-        mes_atual = d.getMonth() + 1,
-        dia_atual = d.getDate(),
-        split = data.split('/'),
-        novadata = split[1] + "/" + split[0] + "/" + split[2],
-        data_americana = new Date(novadata),
-        vAno = data_americana.getFullYear(),
-        vMes = data_americana.getMonth() + 1,
-        vDia = data_americana.getDate(),
-        ano_aniversario = +vAno,
-        mes_aniversario = +vMes,
-        dia_aniversario = +vDia,
-        quantos_anos = ano_atual - ano_aniversario;
+function calculateAge(birthDate) {
+    const today = new Date();
+    const [day, month, year] = birthDate.split('/').map(Number);
+    const FormattedBirthDate = new Date(year, month - 1, day);
 
-    if (mes_atual < mes_aniversario || mes_atual == mes_aniversario && dia_atual < dia_aniversario) {
-        quantos_anos--;
+    let age = today.getFullYear() - FormattedBirthDate.getFullYear();
+
+    if (today < new Date(today.getFullYear(), FormattedBirthDate.getMonth(), FormattedBirthDate.getDate())) {
+        age--;
     }
 
-    return quantos_anos < 0 ? 0 : quantos_anos;
+    return Math.max(age, 0);
 }
-
 
 function updateAge() {
-    var campo = document.getElementById("idade");
-    campo.innerHTML = calcIdade('24/03/2002');
+    const age = document.getElementById('age');
+
+    age.innerHTML = calculateAge('24/03/2002');
 }
 
+function updateCurrentYear() {
+    const year = document.getElementById('year');
 
-onload = () => {
-    updateAge();
+    year.innerHTML = new Date().getFullYear();
 }
+
+updateAge();
+updateCurrentYear();
